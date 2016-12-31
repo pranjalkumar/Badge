@@ -7,11 +7,12 @@
     <meta name="description" content="MOM 2K17">
     <title>MOM2K17 | Frame</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"> -->
 
    <script>
 
     var s;
+    var accessToken;
                 // facebook initialization
                 window.fbAsyncInit = function() {
                     FB.init({
@@ -34,20 +35,23 @@
                                 if (response.status === 'connected') {
                                 // successful connection
                                 s=response.authResponse.userID;
+                                accessToken = response.authResponse.accessToken;
                                 document.getElementById('login').style.visibility = 'hidden';
 				                        document.getElementById('upload').style.display = 'block';
 
 				                        getPhoto();
                         } else if (response.status === 'not_authorized') {
                                 /*not logged in the app*/
+                                window.location.href="index.php";
 				                alert("OOPS!!!Some error has occured please try it again");
                                         
                         } else {
                                 /*not logged in the facebook account*/
+                                window.location.href="index.php";
 					             alert("OOPS!!! Some error has occured please try it again");
 
                         }
-                        }, {scope: 'publish_actions'});
+                        }, {scope: 'publish_actions,user_photos'});
                 }
                 // getting basic user info
                 function getInfo() {
@@ -58,27 +62,43 @@
                 // uploading photo 
                 function uploadPhoto() {
                         console.log("Uploading");
-                        
-                FB.api(
-                    "/me/photos",
-                    "POST",
-                    {
-                        "url": "1681379271888040.jpg"
+var imgURL = "http://www.w3schools.com/css/trolltunga.jpg";//your external photo url
+        FB.api('/photos', 'post', {
+            message: 'photo description',// message here
+            access_token: accessToken, 
+            url: imgURL
+        }, function (response) {
 
-                    },
-                    function (response)     
+            if (!response || response.error) {
+                alert('Error occured:' + response);
+                window.location.href="index.php";
+            } else {
+                console.log("image uploaded successfully");
+                alert("Your image has been successfully uploaded on your facebook timeline.");
+                window.location.href="index.php";
+            }
 
-                         {
-                                if (!response || response.error) {
+        });
+//                 FB.api(
+//                     "/me/photos",
+//                     "POST",
+//                     {
+//                         "url": "1681379271888040.jpg"
+
+//                     },
+//                     function (response)     
+
+//                          {
+//                                 if (!response || response.error) {
                                         
-					 alert("OOPS!! Some error has occured");
-                                        console.log(response.error);
-                                } else {
-//                                        
-						alert("Your photo has been successfuly uploaded");
-						window.location.href="index.php";
-                                }
-                        });
+// 					 alert("OOPS!! Some error has occured");
+//                                         console.log(response.error);
+//                                 } else {
+// //                                        
+// 						alert("Your photo has been successfuly uploaded");
+// 						window.location.href="index.php";
+//                                 }
+//                         });
                 }
 
         function getPhoto()
