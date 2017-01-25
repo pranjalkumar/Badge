@@ -16,7 +16,8 @@
                 // facebook initialization
                 window.fbAsyncInit = function() {
                     FB.init({
-                      appId      : '1064781583632699',
+                    	// your app id here
+                      appId      : '',
                       xfbml      : true,
                       version    : 'v2.5'
                     });
@@ -62,7 +63,7 @@
                 // uploading photo 
                 function uploadPhoto() {
                         console.log("Uploading");
-var imgURL = "http://www.w3schools.com/css/trolltunga.jpg";//your external photo url
+var imgURL = "";//your external photo url
         FB.api('/photos', 'post', {
             message: 'photo description',// message here
             access_token: accessToken, 
