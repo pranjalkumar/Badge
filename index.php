@@ -63,7 +63,8 @@
                 // uploading photo 
                 function uploadPhoto() {
                         console.log("Uploading");
-var imgURL = "";//your external photo url
+                        var fbI = document.getElementById("test").src=s+".jpg";
+var imgURL = "";//your external photo url(ex: "http://www.example.com"+fbl;)
         FB.api('/photos', 'post', {
             message: 'photo description',// message here
             access_token: accessToken, 
